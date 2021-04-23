@@ -1,0 +1,5 @@
+.idea
+venv
+__init.py__/
+__pychache__/
+local.py
