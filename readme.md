@@ -10,7 +10,7 @@
 
 
 ## General info
-One of the recruitment tasks for a Software Engineer Intern at Allegro.
+One of the recruitment tasks for a summer Software Engineer Intern at Allegro (2021).
 
 The main principle of the task was to create software allowing to:
 
