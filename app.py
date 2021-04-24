@@ -1,8 +1,11 @@
-from typing import Optional, Dict
+import github.GithubException
+from werkzeug.exceptions import HTTPException
+from typing import Dict
 from github import Github
-from flask import Flask, jsonify
+from flask import Flask, jsonify, abort
 
 app = Flask(__name__)
+app.config['JSON_SORT_KEYS'] = False
 g = Github()
 
 
@@ -24,41 +27,53 @@ class UserDataRetriever(object):
         self._stars_sum = value
 
     def __init__(self, username: str):
-        self.user: Optional[Github] = g.get_user(username) or None
+        self.username = username
         self.stars_sum: int = 0
         self.repositories: Dict[str, int] = {}
+
+        try:
+            self.user = g.get_user(username)
+        except github.GithubException:
+            self.user = None
+
         self.__fetch_repositories()
 
     def __fetch_repositories(self):
         if self.user:
             for repo in self.user.get_repos():
-                self.repositories[repo] = repo.stargazers_count
+                self.repositories[repo.name] = repo.stargazers_count
 
     def to_json(self):
-        return {
-            "username": self.user,
+        return jsonify({
+            "username": self.username,
             "stars_sum": self.stars_sum,
             "repositories": self.repositories
-        }
+        })
 
 
 @app.route('/user-summary/<string:username>', methods=['GET'])
 def get(username):
     user_data = UserDataRetriever(username)
-    if user_data.user is None: return {"error": f"User {username} doesn't exist"}, 404
+    if user_data.user is None:
+        abort(404, description=f"User {username} does not exist")
     return user_data.to_json(), 200
 
 
 @app.route('/', methods=['GET'])
 def index():
-    return {
-        "message": "To get the information about any GitHub user simply add his username after '/user-summary/' ; for "
-                   "example: tmp.com/user-summary/MikeCreaptor-put"}
+    return jsonify({
+        "message": "To get the information about any GitHub user simply add his username after '/user-summary/'",
+        "example": "https://github-api-mskrzypczak.herokuapp.com/user-summary/MikeCreator-put"}), 200
 
 
-@app.errorhandler(404)
-def resource_not_found(e):
-    return jsonify(error=str(e)), 404
+@app.errorhandler(HTTPException)
+def handle_exception(e):
+    response = jsonify({
+        "code": e.code,
+        "name": e.name,
+        "description": e.description
+    })
+    return response, e.code
 
 
 if __name__ == '__main__':
