@@ -1,11 +1,13 @@
-# GitHub REST API 
+# GitHub REST API overlay
 
 
 ## Table of contents
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Instructions](#instructions)
-* [Further developement ideas](#ideas)
+* [Further developement ideas](#further-development-ideas)
+* [Additional information](#additional-information)
+
 
 ## General info
 One of the recruitment tasks for a Software Engineer Intern at Allegro.
@@ -40,4 +42,10 @@ As the application is currently deployed on Heroku.com you can simply visit [thi
 `curl -X GET https://github-api-mskrzypczak.herokuapp.com/user-summar/allegro`
 
 ## Further development ideas
-My main idea for future development of the application would be to provide it with cache memory
+Here are my ideas for future development:
+
+- Providing the application with cache memory, so that repeated request wouldn't need to be fetched from the GitHub API.
+- Collecting more data: class `UserDataRetriever` can easily be modified to extract more data from the `Github` object `user` (for example: traffic information of each repository)
+
+## Additional information
+This was my first ever encounter with API, Flask, or even JSON file format, so I am aware that there might be some mistakes in my code or even in the approach to the problem itself. Please, feel free to leave your feedback issues.
