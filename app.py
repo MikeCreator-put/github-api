@@ -7,6 +7,7 @@ from flask import Flask, jsonify, abort
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
 g = Github()
+APP_URL = 'https://github-api-mskrzypczak.herokuapp.com/'
 
 
 class UserDataRetriever(object):
@@ -62,8 +63,8 @@ def get(username):
 @app.route('/', methods=['GET'])
 def index():
     return jsonify({
-        "message": "To get the information about any GitHub user simply add his username after '/user-summary/'",
-        "example": "https://github-api-mskrzypczak.herokuapp.com/user-summary/MikeCreator-put"}), 200
+        "message": f"To get the information about any GitHub user simply add his username after '{APP_URL}user-summary/'",
+        "example": f"{APP_URL}user-summary/MikeCreator-put"}), 200
 
 
 @app.errorhandler(HTTPException)
