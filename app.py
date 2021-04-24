@@ -3,17 +3,11 @@ from werkzeug.exceptions import HTTPException
 from typing import Dict
 from github import Github
 from flask import Flask, jsonify, abort
-from flask_caching import Cache
 
 
-config = {
-    "JSON_SORT_KEYS": False,
-    "CACHE_TYPE": "SimpleCache",
-    "CACHE_DEFAULT_TIMEOUT": 300
-}
 app = Flask(__name__)
-app.config.from_mapping(config)
-cache = Cache(app)
+app.config['JSON_SORT_KEYS'] = False
+
 g = Github()
 APP_URL = 'https://github-api-mskrzypczak.herokuapp.com/'
 
@@ -61,7 +55,6 @@ class UserDataRetriever(object):
 
 
 @app.route('/user-summary/<string:username>', methods=['GET'])
-@cache.cached(timeout=50)
 def get(username):
     user_data = UserDataRetriever(username)
     if user_data.user is None:
@@ -70,7 +63,6 @@ def get(username):
 
 
 @app.route('/', methods=['GET'])
-@cache.cached(timeout=50)
 def index():
     return jsonify({
         "message": f"To get the information about any GitHub user simply add his username after '{APP_URL}user-summary/'",
