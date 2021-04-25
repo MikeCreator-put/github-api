@@ -4,12 +4,11 @@ from typing import Dict
 from github import Github
 from flask import Flask, jsonify, abort
 
+APP_URL = 'https://github-api-mskrzypczak.herokuapp.com/'
 
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
-
 g = Github()
-APP_URL = 'https://github-api-mskrzypczak.herokuapp.com/'
 
 
 class UserDataRetriever(object):
@@ -43,8 +42,7 @@ class UserDataRetriever(object):
 
     def __fetch_repositories(self):
         if self.user:
-            for repo in self.user.get_repos():
-                self.repositories[repo.name] = repo.stargazers_count
+            self.repositories = {repo.name: repo.stargazers_count for repo in self.user.get_repos()}
 
     def to_json(self):
         return jsonify({
