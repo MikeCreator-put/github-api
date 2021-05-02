@@ -39,7 +39,7 @@ As the application is currently deployed on Heroku.com you can simply visit [thi
 2. Type in: `curl -X GET https://github-api-mskrzypczak.herokuapp.com`
 3. Follow further instructions
 #### Example of usage
-`curl -X GET https://github-api-mskrzypczak.herokuapp.com/user-summar/allegro`
+`curl -X GET https://github-api-mskrzypczak.herokuapp.com/user-summary/allegro`
 
 ## Further development ideas
 Here are my ideas for future development:
