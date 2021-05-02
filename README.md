@@ -5,7 +5,7 @@
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Instructions](#instructions)
-* [Further developement ideas](#further-development-ideas)
+* [Further development ideas](#further-development-ideas)
 * [Additional information](#additional-information)
 
 
