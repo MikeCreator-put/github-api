@@ -13,20 +13,36 @@ g = Github()
 
 class UserDataRetriever(object):
     @property
+    def username(self):
+        return self.__username
+
+    @property
+    def user(self):
+        return self.__user
+
+    @property
     def repositories(self):
-        return self._repositories
+        return self.__repositories
 
     @property
     def stars_sum(self):
-        return sum(self.repositories.values())
+        return sum(self.__repositories.values())
+
+    @username.setter
+    def username(self, value):
+        self.__username = value
+
+    @user.setter
+    def user(self, value):
+        self.__user = value
 
     @repositories.setter
     def repositories(self, value):
-        self._repositories = value
+        self.__repositories = value
 
     @stars_sum.setter
     def stars_sum(self, value):
-        self._stars_sum = value
+        self.__stars_sum = value
 
     def __init__(self, username: str):
         self.username = username
